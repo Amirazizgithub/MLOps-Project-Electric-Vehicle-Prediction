@@ -1,0 +1,1 @@
+# Path: Electric_Vehicle_Prediction/entity/artifact_entity.py

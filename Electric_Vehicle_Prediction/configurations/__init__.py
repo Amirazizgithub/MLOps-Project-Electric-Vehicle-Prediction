@@ -1,0 +1,1 @@
+# Path: Electric_Vehicle_Prediction/configurations/__init__.py

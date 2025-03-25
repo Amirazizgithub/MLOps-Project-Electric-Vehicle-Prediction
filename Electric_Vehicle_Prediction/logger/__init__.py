@@ -1,0 +1,1 @@
+# Path: Electric_Vehicle_Prediction/logger/__init__.py
