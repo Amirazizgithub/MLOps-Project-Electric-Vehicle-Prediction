@@ -31,4 +31,5 @@ class MongoDBClient:
         return self.database.list_collection_names()
 
 
-MongoDBClient().mongodb_collections()
+col_name = MongoDBClient().mongodb_collections()
+

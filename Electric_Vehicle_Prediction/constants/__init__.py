@@ -6,11 +6,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Define the project name
-Project_Name = "Electric_Vehicle_Prediction"
+Project_Name: str = "Electric_Vehicle_Prediction"
 
 # Define the list of constant to be created in the project
 
-MONGODB_DATABASE_NAME = os.getenv("DATABASE_NAME")
-MONGODB_COLLECTION_NAME = os.getenv("COLLECTION_NAME")
-MONGODB_URI = os.getenv("MONGODB_URI")
+MONGODB_DATABASE_NAME: str = os.getenv("DATABASE_NAME")
+MONGODB_COLLECTION_NAME: str = os.getenv("COLLECTION_NAME")
+MONGODB_URI: str = os.getenv("MONGODB_URI")
 
