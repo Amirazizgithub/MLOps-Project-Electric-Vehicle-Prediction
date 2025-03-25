@@ -1,1 +1,16 @@
 # Path: requirements.txt
+# Path: requirements.txt
+numpy
+pandas
+scikit-learn
+joblib
+matplotlib
+seaborn
+pymongo
+fastapi
+uvicorn
+jinja2
+evidently
+python-multipart
+python-dotenv
+from-root
