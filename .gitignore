@@ -78,6 +78,9 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# Directory ignored
+artifacts/*
+
 # IPython
 profile_default/
 ipython_config.py
