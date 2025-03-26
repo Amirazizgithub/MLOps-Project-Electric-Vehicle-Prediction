@@ -1,0 +1,73 @@
+# Path: config/schema.yaml
+
+columns:
+  - VIN (1-10): category
+  - County: category
+  - City: category
+  - State: category
+  - Postal Code: int
+  - Model Year: int
+  - Make: category
+  - Model: category
+  - Electric Vehicle Type: category
+  - Clean Alternative Fuel Vehicle (CAFV) Eligibility: category
+  - Electric Range: int
+  - Base MSRP: int
+  - Legislative District: int
+  - DOL Vehicle ID: int
+  - Vehicle Location: category
+  - Electric Utility: category
+  - 2020 Census Tract: int
+
+numerical_columns:
+  - Postal Code
+  - Model Year
+  - Electric Range
+  - Base MSRP
+  - Legislative District
+  - DOL Vehicle ID
+  - 2020 Census Tract
+
+categorical_columns:
+  - VIN (1-10)
+  - County
+  - City
+  - State
+  - Make
+  - Model
+  - Electric Vehicle Type
+  - Clean Alternative Fuel Vehicle (CAFV) Eligibility
+  - Vehicle Location
+  - Electric Utility
+
+drop_columns:
+  - Postal Code 
+  - Legislative District
+  - 2020 Census Tract
+  - County
+  - State
+  - City
+  - Electric Utility
+  - Vehicle Location
+  
+
+# for data transformation
+num_features:
+  - Model Year
+  - Base MSRP
+  - Electric Range  # Target column
+  - DOL Vehicle ID
+
+or_columns:  # Ordinal encoding
+  - Electric Vehicle Type  # (e.g., Battery Electric Vehicle < Plug-in Hybrid Electric Vehicle)
+  - Model Year
+
+oh_columns:  # One-hot encoding
+  - Make
+  - Model
+  - Clean Alternative Fuel Vehicle (CAFV) Eligibility
+
+transform_columns:  # Columns requiring scaling or normalization
+  - Base MSRP   # Scale using MinMaxScaler or StandardScaler due to large variability
+  - DOL Vehicle ID  # Consider normalization as its numerical value could be scaled
+  

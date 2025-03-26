@@ -75,5 +75,5 @@ class DataIngestion:
 
 # dataframe=DataIngestion().export_data_into_feature_store()
 # DataIngestion().split_data_as_train_test(dataframe)
-DataIngestion().initiate_data_ingestion()           
+# DataIngestion().initiate_data_ingestion()           
         
