@@ -19,18 +19,19 @@ class MongoDB_Client:
                 mongo_db_url = MONGODB_URI
                 if mongo_db_url is None:
                     raise Exception(f"Environment key: {MONGODB_URI} is not set.")
-                MongoDB_Client.client = MongoClient(mongo_db_url, tlsCAFile=ca)
+                MongoDB_Client.client = MongoClient(mongo_db_url, tlsCAFile=ca, SocketTimeoutMS=50000, connectTimeoutMS=50000)
             self.client = MongoDB_Client.client
             self.database = self.client[database_name]
             self.database_name = database_name
             logging.info("MongoDB connection succesfull")
         except Exception as e:
+            logging.error(f"Error occurred: {e}")
             raise EV_Exception(e, sys)
 
     def get_client(self) -> MongoClient:
         return self.client
 
-    def mongodb_collections(self):
+    def mongodb_collections(self) -> list:
         return self.database.list_collection_names()
 
 
