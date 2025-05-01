@@ -9,14 +9,14 @@ class DataIngestionArtifact:
     feature_store_file_path: str
 
 @dataclass
+class DataTransformationArtifact:
+    transformed_training_file_path: str
+    transformed_testing_file_path: str
+    preprocessed_object_file_path: str
+
+@dataclass
 class DataValidationArtifact:
     validation_status: bool
     message: str
     drift_report_file_path: str
 
-
-@dataclass
-class DataTransformationArtifact:
-    transformed_training_file_path: str
-    transformed_testing_file_path: str
-    preprocessed_object_file_path: str

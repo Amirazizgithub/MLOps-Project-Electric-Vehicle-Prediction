@@ -41,8 +41,10 @@ categorical_columns:
   - Electric Utility
 
 drop_columns:
+  - VIN (1-10)  # Unique identifier, not needed for analysis
   - Postal Code 
   - Legislative District
+  - DOL Vehicle ID
   - 2020 Census Tract
   - County
   - State
@@ -56,18 +58,13 @@ num_features:
   - Model Year
   - Base MSRP
   - Electric Range  # Target column
-  - DOL Vehicle ID
 
 or_columns:  # Ordinal encoding
   - Electric Vehicle Type  # (e.g., Battery Electric Vehicle < Plug-in Hybrid Electric Vehicle)
-  - Model Year
 
 oh_columns:  # One-hot encoding
   - Make
   - Model
   - Clean Alternative Fuel Vehicle (CAFV) Eligibility
 
-transform_columns:  # Columns requiring scaling or normalization
-  - Base MSRP   # Scale using MinMaxScaler or StandardScaler due to large variability
-  - DOL Vehicle ID  # Consider normalization as its numerical value could be scaled
   
