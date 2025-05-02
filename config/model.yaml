@@ -9,34 +9,31 @@ grid_search:
     
 model_selection:
   module_0:
-    class: KNeighborsClassifier
-    module: sklearn.neighbors
+    class: XGBRegressor
+    module: xgboost
     params:
-      algorithm: kd_tree
-      weights: uniform
-      n_neighbors: 3
+      max_depth: 1
+      min_child_weight: 7
     search_param_grid:
-      algorithm:
-      - auto
-      - ball_tree
-      - kd_tree
-      - brute
-      weights:
-      - uniform
-      - distance
-      n_neighbors:
+      max_depth:
       - 3
       - 5
+      - 7
       - 9
+      min_child_weight:
+      - 1
+      - 2
+      - 3
+      - 5
 
       
   module_1:
     class: RandomForestClassifier
     module: sklearn.ensemble
     params:
-      max_depth: 10
+      max_depth: 20
       max_features: sqrt
-      n_estimators: 3
+      n_estimators: 100
     search_param_grid:
       max_depth:
       - 10
