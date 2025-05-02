@@ -73,3 +73,19 @@ class DataTransformationConfig:
         DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR,
         PREPROCSSING_OBJECT_FILE_NAME,
     )
+
+# Define the model trainer config
+@dataclass
+class ModelTrainerConfig:
+    model_trainer_dir: str = os.path.join(
+        training_pipeline_config.ARTIFACTS_DIR, MODEL_TRAINER_DIR_NAME
+    )
+    trained_model_file_path: str = os.path.join(
+        model_trainer_dir, MODEL_TRAINER_TRAINED_MODEL_DIR, MODEL_FILE_NAME
+    )
+    expected_accuracy: float = MODEL_TRAINER_EXPECTED_SCORE
+
+# Define the model evaluation config
+@dataclass
+class ModelEvaluationConfig:
+    changed_threshold_score: float = MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE

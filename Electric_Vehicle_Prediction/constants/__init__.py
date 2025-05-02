@@ -24,7 +24,6 @@ FILE_NAME: str = "EV_Data.csv"
 MODEL_FILE_NAME = os.getenv("MODEL_FILE_NAME")
 
 TARGET_COLUMN = "Electric Range"
-CURRENT_YEAR = datetime.today().year
 PREPROCSSING_OBJECT_FILE_NAME = "preprocessing.pkl"
 SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
 
@@ -52,3 +51,15 @@ DATA_TRANSFORMATION_DIR_NAME: str = "data_transformation"
 DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR: str = "transformed"
 DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR: str = "transformed_object"
 
+"""
+MODEL TRAINER related constant start with MODEL_TRAINER var name
+"""
+MODEL_TRAINER_DIR_NAME: str = "model_trainer"
+MODEL_TRAINER_TRAINED_MODEL_DIR: str = "trained_model"
+MODEL_FILE_NAME = "model.pkl"
+MODEL_TRAINER_EXPECTED_SCORE: float = 0.85
+
+"""
+MODEL EVALUATION related constant 
+"""
+MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02

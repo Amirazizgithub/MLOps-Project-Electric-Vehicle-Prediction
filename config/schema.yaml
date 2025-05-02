@@ -51,7 +51,15 @@ drop_columns:
   - City
   - Electric Utility
   - Vehicle Location
-  
+
+remaining_columns:
+  - Model Year: int
+  - Make: category
+  - Model: category
+  - Electric Vehicle Type: category
+  - Clean Alternative Fuel Vehicle (CAFV) Eligibility: category
+  - Electric Range: int
+  - Base MSRP: int 
 
 # for data transformation
 num_features:

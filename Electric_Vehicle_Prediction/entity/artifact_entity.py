@@ -12,11 +12,29 @@ class DataIngestionArtifact:
 class DataTransformationArtifact:
     transformed_training_file_path: str
     transformed_testing_file_path: str
-    preprocessed_object_file_path: str
+    transformed_object_file_path: str
 
 @dataclass
 class DataValidationArtifact:
     validation_status: bool
     message: str
     drift_report_file_path: str
+
+@dataclass
+class RegressionMetricArtifact:
+    r2_score: float
+    mse: float
+    rmse: float
+    accuracy: float
+
+@dataclass
+class ModelTrainerArtifact:
+    trained_model_file_path: str
+    metric_artifact: RegressionMetricArtifact
+
+@dataclass
+class ModelEvaluationArtifact:
+    is_model_accepted: bool
+    changed_accuracy: float
+    trained_model_path: str
 

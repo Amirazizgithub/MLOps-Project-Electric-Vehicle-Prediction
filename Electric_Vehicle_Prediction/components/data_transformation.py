@@ -10,7 +10,7 @@ from sklearn.preprocessing import (
 )
 from sklearn.compose import ColumnTransformer
 
-from Electric_Vehicle_Prediction.constants import TARGET_COLUMN, SCHEMA_FILE_PATH, CURRENT_YEAR
+from Electric_Vehicle_Prediction.constants import TARGET_COLUMN, SCHEMA_FILE_PATH
 from Electric_Vehicle_Prediction.entity.config_entity import DataTransformationConfig
 from Electric_Vehicle_Prediction.entity.artifact_entity import (
     DataTransformationArtifact,
@@ -20,9 +20,6 @@ from Electric_Vehicle_Prediction.entity.artifact_entity import (
 from Electric_Vehicle_Prediction.exceptions import EV_Exception
 from Electric_Vehicle_Prediction.logger import logging
 from Electric_Vehicle_Prediction.utils.main_utils import main_utils
-# from Electric_Vehicle_Prediction.entity.estimator import (
-#     TargetValueMapping,
-# )
 
 
 class DataTransformation:
@@ -40,7 +37,7 @@ class DataTransformation:
         except Exception as e:
             raise EV_Exception(e, sys)
 
-    @staticmethod  ## Doesn't need self
+    @staticmethod
     def read_data(file_path) -> pd.DataFrame:
         try:
             return pd.read_csv(file_path)
@@ -158,3 +155,5 @@ class DataTransformation:
 
         except Exception as e:
             raise EV_Exception(e, sys) from e
+        
+       
