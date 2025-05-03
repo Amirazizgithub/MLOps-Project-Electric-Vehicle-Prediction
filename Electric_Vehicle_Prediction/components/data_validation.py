@@ -87,14 +87,15 @@ class DataValidation:
         try:
             report = Report(metrics=[DataDriftPreset()])
             report.run(reference_data=reference_df, current_data=current_df)
-            data_drift_report = report.metrics
-            json_report = {"metrics": data_drift_report}
+            data_drift_status = report.include_tests
+
+            json_report = {"data_drift_status": data_drift_status}
             main_utils.write_yaml_file(
                 file_path=self.data_validation_config.drift_report_file_path,
                 content=json_report,
             )
-            drift_not_detected_status = data_drift_report[0].include_tests
-            return drift_not_detected_status
+
+            return data_drift_status
 
         except Exception as e:
             raise EV_Exception(e, sys) from e
@@ -135,12 +136,12 @@ class DataValidation:
             validation_status = len(validation_error_msg) == 0
 
             if validation_status:
-                drift_not_detected_status = self.detect_dataset_drift(train_df, test_df)
-                if drift_not_detected_status:
-                    logging.info(f"Drift Not Detected.")
-                    validation_error_msg = "Drift Not Detected"
-                else:
+                data_drift_status = self.detect_dataset_drift(train_df, test_df)
+                if data_drift_status:
+                    logging.info(f"Drift Detected.")
                     validation_error_msg = "Drift Detected"
+                else:
+                    validation_error_msg = "Drift Not Detected"
             else:
                 logging.info(f"Validation_error: {validation_error_msg}")
 
