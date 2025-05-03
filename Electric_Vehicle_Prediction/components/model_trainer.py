@@ -1,11 +1,7 @@
 # Path: US_Visa_Prediction/components/model_trainer.py
 import sys
 from typing import Tuple
-
 import numpy as np
-import pandas as pd
-from pandas import DataFrame
-from sklearn.pipeline import Pipeline
 from sklearn.metrics import r2_score, mean_squared_error
 from xgboost import XGBRegressor
 from Electric_Vehicle_Prediction.exceptions import EV_Exception
@@ -41,8 +37,8 @@ class ModelTrainer:
                 test[:, -1],
             )
             XGBRegressor_model = XGBRegressor(max_depth=7, min_child_weight=1)
-            best_model = XGBRegressor_model.fit(x_train,y_train)
-            
+            best_model = XGBRegressor_model.fit(x_train, y_train)
+
             y_pred = best_model.predict(x_test)
             r_squared_score = r2_score(y_test, y_pred)
             mse = mean_squared_error(y_test, y_pred)
@@ -54,7 +50,12 @@ class ModelTrainer:
                 rmse=rmse,
                 accuracy=model_accuracy,
             )
-
+            main_utils.write_json_file(
+                file_path=self.model_trainer_config.metric_artifact_file_path,
+                content=metric_artifact.__dict__,
+                replace=True,
+            )
+            logging.info(f"Model report: {metric_artifact}")
             return best_model, metric_artifact, model_accuracy
 
         except Exception as e:
@@ -72,15 +73,17 @@ class ModelTrainer:
                 file_path=self.data_transformation_artifact.transformed_testing_file_path
             )
 
-            best_model, metric_artifact, model_accuracy = self.get_model_object_and_report(
-                train=train_arr, test=test_arr
+            best_model, metric_artifact, model_accuracy = (
+                self.get_model_object_and_report(train=train_arr, test=test_arr)
             )
 
-            if (model_accuracy < self.model_trainer_config.expected_accuracy):
+            if model_accuracy < self.model_trainer_config.expected_accuracy:
                 logging.info("No best model found with score more than base score")
                 raise Exception("No best model found with score more than base score")
 
-            main_utils.save_object(self.model_trainer_config.trained_model_file_path, best_model)
+            main_utils.save_object(
+                self.model_trainer_config.trained_model_file_path, best_model
+            )
 
             model_trainer_artifact = ModelTrainerArtifact(
                 trained_model_file_path=self.model_trainer_config.trained_model_file_path,

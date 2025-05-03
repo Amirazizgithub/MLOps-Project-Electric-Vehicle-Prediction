@@ -19,7 +19,12 @@ class MongoDB_Client:
                 mongo_db_url = MONGODB_URI
                 if mongo_db_url is None:
                     raise Exception(f"Environment key: {MONGODB_URI} is not set.")
-                MongoDB_Client.client = MongoClient(mongo_db_url, tlsCAFile=ca, SocketTimeoutMS=50000, connectTimeoutMS=50000)
+                MongoDB_Client.client = MongoClient(
+                    mongo_db_url,
+                    tlsCAFile=ca,
+                    SocketTimeoutMS=50000,
+                    connectTimeoutMS=50000,
+                )
             self.client = MongoDB_Client.client
             self.database = self.client[database_name]
             self.database_name = database_name

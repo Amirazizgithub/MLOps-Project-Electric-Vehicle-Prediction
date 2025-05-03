@@ -12,8 +12,8 @@ model_selection:
     class: XGBRegressor
     module: xgboost
     params:
-      max_depth: 1
-      min_child_weight: 7
+      max_depth: 7
+      min_child_weight: 1
     search_param_grid:
       max_depth:
       - 3

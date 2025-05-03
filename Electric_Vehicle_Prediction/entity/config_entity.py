@@ -51,7 +51,7 @@ class DataValidationConfig:
         DATA_VALIDATION_DRIFT_REPORT_FILE_NAME,
     )
 
-    
+
 # Define the data transformation config
 @dataclass
 class DataTransformationConfig:
@@ -74,6 +74,7 @@ class DataTransformationConfig:
         PREPROCSSING_OBJECT_FILE_NAME,
     )
 
+
 # Define the model trainer config
 @dataclass
 class ModelTrainerConfig:
@@ -83,7 +84,18 @@ class ModelTrainerConfig:
     trained_model_file_path: str = os.path.join(
         model_trainer_dir, MODEL_TRAINER_TRAINED_MODEL_DIR, MODEL_FILE_NAME
     )
+    metric_artifact_file_path: str = os.path.join(
+        model_trainer_dir, MODEL_TRAINER_TRAINED_MODEL_DIR, MODEL_METRIC_FILE_NAME
+    )
     expected_accuracy: float = MODEL_TRAINER_EXPECTED_SCORE
+
+
+@dataclass
+class ModelRegisterConfig:
+    ec2_mlflow_tracking_uri: str = EC2_MLFLOW_TRACKING_URI
+    experiment_name: str = EXPERIMENT_NAME
+    mlflow_model_name: str = MLFLOW_MODEL_NAME
+
 
 # Define the model evaluation config
 @dataclass

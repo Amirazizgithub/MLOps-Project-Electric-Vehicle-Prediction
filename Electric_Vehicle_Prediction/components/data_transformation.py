@@ -93,13 +93,17 @@ class DataTransformation:
                 input_feature_train_df = train_df.drop(columns=[TARGET_COLUMN], axis=1)
                 target_feature_train_df = train_df[TARGET_COLUMN]
 
-                logging.info("Got input features and target features of Training dataset")
+                logging.info(
+                    "Got input features and target features of Training dataset"
+                )
 
                 input_feature_test_df = test_df.drop(columns=[TARGET_COLUMN], axis=1)
 
                 target_feature_test_df = test_df[TARGET_COLUMN]
 
-                logging.info("Got input features and target features of Testing dataset")
+                logging.info(
+                    "Got input features and target features of Testing dataset"
+                )
 
                 logging.info(
                     "Applying preprocessing object on training dataframe and testing dataframe"
@@ -155,5 +159,3 @@ class DataTransformation:
 
         except Exception as e:
             raise EV_Exception(e, sys) from e
-        
-       

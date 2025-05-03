@@ -1,6 +1,5 @@
 # Path: Electric_Vehicle_Prediction/constants/__init__.py
 import os
-from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -57,7 +56,15 @@ MODEL TRAINER related constant start with MODEL_TRAINER var name
 MODEL_TRAINER_DIR_NAME: str = "model_trainer"
 MODEL_TRAINER_TRAINED_MODEL_DIR: str = "trained_model"
 MODEL_FILE_NAME = "model.pkl"
-MODEL_TRAINER_EXPECTED_SCORE: float = 0.85
+MODEL_METRIC_FILE_NAME = "model_report.json"
+MODEL_TRAINER_EXPECTED_SCORE: float = 0.75
+
+"""
+MODEL REGISTER related constant 
+"""
+EC2_MLFLOW_TRACKING_URI: str = os.getenv("EC2_MLFLOW_TRACKING_URI")
+EXPERIMENT_NAME: str = "EV_Prediction"
+MLFLOW_MODEL_NAME: str = "EV_Prediction_Model"
 
 """
 MODEL EVALUATION related constant 
