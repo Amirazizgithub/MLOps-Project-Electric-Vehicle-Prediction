@@ -31,6 +31,13 @@ class DataValidation:
             self._schema_config = main_utils.read_yaml_file(file_path=SCHEMA_FILE_PATH)
         except Exception as e:
             raise EV_Exception(e, sys)
+        
+    @staticmethod
+    def read_data(file_path) -> DataFrame:
+        try:
+            return pd.read_csv(file_path)
+        except Exception as e:
+            raise EV_Exception(e, sys)
 
     def validate_number_of_columns(self, dataframe: DataFrame) -> bool:
         try:
@@ -47,14 +54,14 @@ class DataValidation:
             dataframe_columns = df.columns
             missing_numerical_columns = []
             missing_categorical_columns = []
-            for column in self._schema_config["numerical_columns"]:
+            for column in self._schema_config["remaining_numerical_columns"]:
                 if column not in dataframe_columns:
                     missing_numerical_columns.append(column)
 
             if len(missing_numerical_columns) > 0:
                 logging.info(f"Missing numerical column: {missing_numerical_columns}")
 
-            for column in self._schema_config["categorical_columns"]:
+            for column in self._schema_config["remaining_categorial_columns"]:
                 if column not in dataframe_columns:
                     missing_categorical_columns.append(column)
 
@@ -71,13 +78,6 @@ class DataValidation:
             )
         except Exception as e:
             raise EV_Exception(e, sys) from e
-
-    @staticmethod
-    def read_data(file_path) -> DataFrame:
-        try:
-            return pd.read_csv(file_path)
-        except Exception as e:
-            raise EV_Exception(e, sys)
 
     def detect_dataset_drift(
         self,

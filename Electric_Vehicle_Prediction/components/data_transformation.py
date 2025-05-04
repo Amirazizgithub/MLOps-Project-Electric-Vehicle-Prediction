@@ -51,7 +51,7 @@ class DataTransformation:
 
         try:
             numeric_transformer = StandardScaler()
-            oh_transformer = OneHotEncoder()
+            oh_transformer = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
             ordinal_encoder = OrdinalEncoder()
 
             logging.info("Initialized StandardScaler, OneHotEncoder, OrdinalEncoder")
@@ -134,11 +134,11 @@ class DataTransformation:
                     preprocessor,
                 )
                 main_utils.save_numpy_array_data(
-                    self.data_transformation_config.transformed_train_file_path,
+                    self.data_transformation_config.transformed_training_file_path,
                     array=train_arr,
                 )
                 main_utils.save_numpy_array_data(
-                    self.data_transformation_config.transformed_test_file_path,
+                    self.data_transformation_config.transformed_testing_file_path,
                     array=test_arr,
                 )
 
@@ -150,8 +150,8 @@ class DataTransformation:
 
                 data_transformation_artifact = DataTransformationArtifact(
                     transformed_object_file_path=self.data_transformation_config.transformed_object_file_path,
-                    transformed_train_file_path=self.data_transformation_config.transformed_train_file_path,
-                    transformed_test_file_path=self.data_transformation_config.transformed_test_file_path,
+                    transformed_training_file_path=self.data_transformation_config.transformed_training_file_path,
+                    transformed_testing_file_path=self.data_transformation_config.transformed_testing_file_path,
                 )
                 return data_transformation_artifact
             else:
@@ -159,3 +159,4 @@ class DataTransformation:
 
         except Exception as e:
             raise EV_Exception(e, sys) from e
+        

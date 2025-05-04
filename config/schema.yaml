@@ -53,19 +53,29 @@ drop_columns:
   - Vehicle Location
 
 remaining_columns:
-  - Model Year: int
-  - Make: category
-  - Model: category
-  - Electric Vehicle Type: category
-  - Clean Alternative Fuel Vehicle (CAFV) Eligibility: category
-  - Electric Range: int
-  - Base MSRP: int 
+  - Model Year
+  - Make
+  - Model
+  - Electric Vehicle Type
+  - Clean Alternative Fuel Vehicle (CAFV) Eligibility
+  - Electric Range
+  - Base MSRP
+
+remaining_numerical_columns:
+  - Model Year
+  - Electric Range
+  - Base MSRP
+
+remaining_categorial_columns:
+  - Make
+  - Model
+  - Electric Vehicle Type
+  - Clean Alternative Fuel Vehicle (CAFV) Eligibility
 
 # for data transformation
 num_features:
   - Model Year
   - Base MSRP
-  - Electric Range  # Target column
 
 or_columns:  # Ordinal encoding
   - Electric Vehicle Type  # (e.g., Battery Electric Vehicle < Plug-in Hybrid Electric Vehicle)

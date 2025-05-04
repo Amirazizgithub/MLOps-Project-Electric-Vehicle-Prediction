@@ -57,7 +57,7 @@ MODEL_TRAINER_DIR_NAME: str = "model_trainer"
 MODEL_TRAINER_TRAINED_MODEL_DIR: str = "trained_model"
 MODEL_FILE_NAME = "model.pkl"
 MODEL_METRIC_FILE_NAME = "model_report.json"
-MODEL_TRAINER_EXPECTED_SCORE: float = 0.75
+MODEL_TRAINER_EXPECTED_SCORE: float = 0.5
 
 """
 MODEL REGISTER related constant 

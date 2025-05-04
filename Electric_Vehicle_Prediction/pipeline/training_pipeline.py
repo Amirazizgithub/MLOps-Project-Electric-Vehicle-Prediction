@@ -6,7 +6,7 @@ from Electric_Vehicle_Prediction.components.data_validation import DataValidatio
 from Electric_Vehicle_Prediction.components.data_transformation import DataTransformation
 from Electric_Vehicle_Prediction.components.model_trainer import ModelTrainer
 # from Electric_Vehicle_Prediction.components.model_evaluation import ModelEvaluation
-# from Electric_Vehicle_Prediction.components.model_pusher import ModelPusher
+from Electric_Vehicle_Prediction.components.model_register import ModelRegister
 
 
 from Electric_Vehicle_Prediction.entity.config_entity import (
@@ -15,7 +15,7 @@ from Electric_Vehicle_Prediction.entity.config_entity import (
     DataTransformationConfig,
     ModelTrainerConfig,
     # ModelEvaluationConfig,
-    # ModelPusherConfig,
+    ModelRegisterConfig,
 )
 
 from Electric_Vehicle_Prediction.entity.artifact_entity import (
@@ -24,7 +24,6 @@ from Electric_Vehicle_Prediction.entity.artifact_entity import (
     DataTransformationArtifact,
     ModelTrainerArtifact,
     # ModelEvaluationArtifact,
-    # ModelPusherArtifact,
 )
 
 
@@ -35,7 +34,7 @@ class TrainPipeline:
         self.data_transformation_config = DataTransformationConfig()
         self.model_trainer_config = ModelTrainerConfig()
         # self.model_evaluation_config = ModelEvaluationConfig()
-        # self.model_pusher_config = ModelPusherConfig()
+        self.model_register_config = ModelRegisterConfig()
 
     def start_data_ingestion(self) -> DataIngestionArtifact:
         try:
@@ -87,6 +86,7 @@ class TrainPipeline:
         self, data_transformation_artifact: DataTransformationArtifact
     ) -> ModelTrainerArtifact:
         try:
+            logging.info("Entered the start_model_trainer method of TrainPipeline class")
             model_trainer = ModelTrainer(
                 data_transformation_artifact=data_transformation_artifact,
                 model_trainer_config=self.model_trainer_config,
@@ -96,6 +96,39 @@ class TrainPipeline:
 
         except Exception as e:
             raise EV_Exception(e, sys)
+        
+    def start_model_register(
+        self, model_trainer_artifact: ModelTrainerArtifact
+    ) -> None:
+        """
+        This method of TrainPipeline class is responsible for starting model pushing
+        """
+        try:
+            logging.info("Entered the start_model_register method of TrainPipeline class")
+            model_register = ModelRegister(
+                model_trainer_artifact=model_trainer_artifact,
+                model_register_config=self.model_register_config,
+            )
+            model_register.initiate_model_register_to_mlflow()
+        except Exception as e:
+            raise EV_Exception(e, sys) from e
+        
+    # def start_model_register(
+    #     self, model_evaluation_artifact: ModelEvaluationArtifact
+    # ) -> ModelPusherArtifact:
+    #     """
+    #     This method of TrainPipeline class is responsible for starting model pushing
+    #     """
+    #     try:
+    #         logging.info("Entered the start_model_register method of TrainPipeline class")
+    #         model_pusher = ModelPusher(
+    #             model_evaluation_artifact=model_evaluation_artifact,
+    #             model_pusher_config=self.model_pusher_config,
+    #         )
+    #         model_pusher_artifact = model_pusher.initiate_model_pusher()
+    #         return model_pusher_artifact
+    #     except Exception as e:
+    #         raise EV_Exception(e, sys)
         
     def run_pipeline(
         self,
@@ -115,6 +148,8 @@ class TrainPipeline:
             model_trainer_artifact = self.start_model_trainer(
                 data_transformation_artifact=data_transformation_artifact
             )
+
+            self.start_model_register(model_trainer_artifact=model_trainer_artifact)
             # model_evaluation_artifact = self.start_model_evaluation(
             #     data_ingestion_artifact=data_ingestion_artifact,
             #     model_trainer_artifact=model_trainer_artifact,

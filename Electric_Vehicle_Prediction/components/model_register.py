@@ -9,19 +9,19 @@ from Electric_Vehicle_Prediction.entity.config_entity import ModelRegisterConfig
 from Electric_Vehicle_Prediction.entity.artifact_entity import ModelTrainerArtifact
 
 
-class ModelPusher:
+class ModelRegister:
     def __init__(
         self,
         model_trainer_artifact: ModelTrainerArtifact,
         model_register_config: ModelRegisterConfig,
-    ):
+    ) -> None:
         try:
             self.model_trainer_artifact = model_trainer_artifact
             self.model_register_config = model_register_config
         except Exception as e:
             raise EV_Exception(e, sys) from e
 
-    def initiate_model_register_to_mlflow(self):
+    def initiate_model_register_to_mlflow(self) -> None:
         try:
             logging.info("Start Registeration of model to MLflow")
             # Set tracking URI and experiment name
@@ -78,15 +78,17 @@ class ModelPusher:
             model_version = client.create_model_version(
                 name=model_name, source=artifact_uri, run_id=run_id
             )
+
             logging.info(f"Created model version: {model_version.version}")
 
             # Transition the model version to Production
             client.transition_model_version_stage(
                 name=model_name,
                 version=model_version.version,
-                stage="Production",
+                stage="staging",
                 archive_existing_versions=True,
             )
+            
             logging.info(
                 f"Model version {model_version.version} transitioned to Production stage"
             )

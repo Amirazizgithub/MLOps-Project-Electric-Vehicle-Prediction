@@ -50,11 +50,6 @@ class ModelTrainer:
                 rmse=rmse,
                 accuracy=model_accuracy,
             )
-            main_utils.write_json_file(
-                file_path=self.model_trainer_config.metric_artifact_file_path,
-                content=metric_artifact.__dict__,
-                replace=True,
-            )
             logging.info(f"Model report: {metric_artifact}")
             return best_model, metric_artifact, model_accuracy
 
@@ -85,8 +80,15 @@ class ModelTrainer:
                 self.model_trainer_config.trained_model_file_path, best_model
             )
 
+            main_utils.write_json_file(
+                file_path=self.model_trainer_config.metric_artifact_file_path,
+                content=metric_artifact.__dict__,
+                replace=True,
+            )
+
             model_trainer_artifact = ModelTrainerArtifact(
                 trained_model_file_path=self.model_trainer_config.trained_model_file_path,
+                metric_artifact_file_path=self.model_trainer_config.metric_artifact_file_path,
                 metric_artifact=metric_artifact,
             )
             logging.info(f"Model trainer artifact: {model_trainer_artifact}")
