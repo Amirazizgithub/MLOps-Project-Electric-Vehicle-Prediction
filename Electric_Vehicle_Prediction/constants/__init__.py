@@ -65,3 +65,6 @@ MODEL REGISTER related constant
 EC2_MLFLOW_TRACKING_URI: str = os.getenv("EC2_MLFLOW_TRACKING_URI")
 EXPERIMENT_NAME: str = "EV_Prediction"
 MLFLOW_MODEL_NAME: str = "EV_Prediction_Model"
+
+APP_HOST = "0.0.0.0"
+APP_PORT = 8080

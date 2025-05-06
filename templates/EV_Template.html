@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Vehicle Range Prediction</title>
+    <link rel="stylesheet" href="/static/CSS/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Electric Vehicle Range Prediction</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="model_year">Model Year:</label>
+                <input type="number" id="model_year" name="model_year" required>
+            </div>
+            <div class="form-group">
+                <label for="make">Make:</label>
+                <input type="text" id="make" name="make" required>
+            </div>
+            <div class="form-group">
+                <label for="model">Model:</label>
+                <input type="text" id="model" name="model" required>
+            </div>
+            <div class="form-group">
+                <label for="electric_vehicle_type">Electric Vehicle Type:</label>
+                <select id="electric_vehicle_type" name="electric_vehicle_type" required>
+                    <option value="Battery Electric Vehicle (BEV)">Battery Electric Vehicle (BEV)</option>
+                    <option value="Plug-in Hybrid Electric Vehicle (PHEV)">Plug-in Hybrid Electric Vehicle (PHEV)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="clean_alternative_fuel_vehicle_eligibility">Clean Alternative Fuel Vehicle (CAFV) Eligibility:</label>
+                <select id="clean_alternative_fuel_vehicle_eligibility" name="clean_alternative_fuel_vehicle_eligibility" required>
+                    <option value="Clean Alternative Fuel Vehicle Eligible">Clean Alternative Fuel Vehicle Eligible</option>
+                    <option value="Eligibility unknown as battery range has not been researched">Eligibility unknown as battery range has not been researched</option>
+                    <option value="Not eligible due to low battery range">Not eligible due to low battery range</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="base_msrp">Base MSRP:</label>
+                <input type="number" id="base_msrp" name="base_msrp" required>
+            </div>
+            <button type="submit" class="btn">Predict Range</button>
+        </form>
+
+        {% if Electric Range %}
+        <div class="prediction-result">
+            <h2>Prediction Result</h2>
+            <p>The predicted electric range is: <span>{{ Electric Range }}</span></p>
+        </div>
+        {% endif %}
+
+        {% if context %}
+        <div class="info">
+            <p>{{ context }}</p>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="error">
+            <h2>Error</h2>
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

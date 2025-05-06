@@ -1,17 +1,14 @@
 # Path: US_Visa_Prediction/pipeline/prediction_pipeline.py
-import os
 import sys
 
-import numpy as np
-import pandas as pd
 import mlflow
 import mlflow.sklearn
 from typing import Optional
 from pandas import DataFrame
-from Electric_Vehicle_Prediction.entity.config_entity import ModelRegisterConfig
+from Electric_Vehicle_Prediction.entity.config_entity import ModelRegisterConfig, DataTransformationConfig
 from Electric_Vehicle_Prediction.exceptions import EV_Exception
-from Electric_Vehicle_Prediction.logger import logging
 from Electric_Vehicle_Prediction.utils.main_utils import main_utils
+from Electric_Vehicle_Prediction.logger import logging
 from pandas import DataFrame
 
 class ElectricVehicleData:
@@ -68,10 +65,12 @@ class EVPredictor:
     def __init__(
         self,
         model_register_config: ModelRegisterConfig = ModelRegisterConfig(),
+        data_transformation_config: DataTransformationConfig = DataTransformationConfig(),
     ) -> float:
         try:
             # self.schema_config = main_utils.read_yaml_file(SCHEMA_FILE_PATH)
             self.model_register_config = model_register_config
+            self.data_transformation_config = data_transformation_config
         except Exception as e:
             raise EV_Exception(e, sys)
         
@@ -115,6 +114,21 @@ class EVPredictor:
 
         except Exception as e:
             raise EV_Exception(e, sys) from e
+        
+    # Load Preprocessor from Artifact Store
+    def load_preprocessor(self) -> Optional[object]:
+        try:
+            # Load the preprocessor from the artifact store
+            preprocessor = main_utils.save_object(
+                    self.data_transformation_config.transformed_object_file_path,
+                    preprocessor,
+                )
+            logging.info("Preprocessor loaded successfully")
+
+            return preprocessor
+
+        except Exception as e:
+            raise EV_Exception(e, sys) from e
 
     def predict(self, dataframe) -> float:
         try:
@@ -122,10 +136,19 @@ class EVPredictor:
             model = self.load_mlflow_production_model()
             if model is None:
                 raise ValueError("Model not found in the 'Production' stage on MLflow.")
-            result = model.predict(dataframe)
+            preprocessor = self.load_preprocessor()
+            if preprocessor is None:
+                raise ValueError("Preprocessor not found in the artifact store.")
+            
+            try:
+                preprocessed_data = preprocessor.transform(dataframe)
+                result = model.predict(preprocessed_data)
 
-            return result
+                return result
+            
+            except Exception as e:
+                raise EV_Exception(e, sys) from e
 
         except Exception as e:
-            raise EV_Exception(e, sys)
+            raise EV_Exception(e, sys) from e
         

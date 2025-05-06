@@ -1,1 +1,74 @@
-# Path: .dockerignore
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Distribution / packaging
+build/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+wheels/
+*.egg-info/
+.installed.cfg
+MANIFEST
+
+# Logs and databases
+*.log
+db.sqlite3
+db.sqlite3-journal
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Flask instance folder
+instance/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# PyCharm settings
+.idea/
+
+# Docker-specific files
+Dockerfile
+docker-compose.yml
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Ignore artifacts
+artifacts/*
+
+# Python files
+test.py
+test.ipynb
+
+# Ignore git files
+.git
+.gitignore
+

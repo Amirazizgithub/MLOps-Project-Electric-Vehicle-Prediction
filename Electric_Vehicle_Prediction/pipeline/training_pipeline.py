@@ -124,7 +124,7 @@ class TrainPipeline:
 
     def start_model_evaluation(
         self,
-        data_ingestion_artifact: DataTransformationArtifact,
+        data_transformation_artifact: DataTransformationArtifact,
         model_trainer_artifact: ModelTrainerArtifact,
     ) -> bool:
         """
@@ -136,7 +136,7 @@ class TrainPipeline:
             )
             model_evaluation = ModelEvaluation(
                 model_register_config=self.model_register_config,
-                data_ingestion_artifact=data_ingestion_artifact,
+                data_transformation_artifact=data_transformation_artifact,
                 model_trainer_artifact=model_trainer_artifact,
             )
             return model_evaluation.initiate_model_evaluation()
@@ -163,7 +163,7 @@ class TrainPipeline:
             )
 
             model_evaluation_status = self.start_model_evaluation(
-                data_ingestion_artifact=data_ingestion_artifact,
+                data_transformation_artifact=data_transformation_artifact,
                 model_trainer_artifact=model_trainer_artifact,
             )
 
