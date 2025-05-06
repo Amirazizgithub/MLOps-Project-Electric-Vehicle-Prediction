@@ -30,36 +30,39 @@ class ModelEvaluation:
             self.model_trainer_artifact = model_trainer_artifact
         except Exception as e:
             raise EV_Exception(e, sys) from e
-        
+
     def load_testing_data(self) -> np.array:
         try:
             test_arr = main_utils.load_numpy_array_data(
                 file_path=self.data_transformation_artifact.transformed_testing_file_path
             )
-            logging.info(f"Testing data loaded from {self.data_transformation_artifact.transformed_testing_file_path}")
+            logging.info(
+                f"Testing data loaded from {self.data_transformation_artifact.transformed_testing_file_path}"
+            )
             return test_arr
         except Exception as e:
             raise EV_Exception(e, sys) from e
-        
+
     def load_new_trained_model(self) -> object:
         try:
             trained_model = main_utils.load_object(
                 file_path=self.model_trainer_artifact.trained_model_file_path
             )
-            logging.info(f"Newly trained model loaded from {self.model_trainer_artifact.trained_model_file_path}")
+            logging.info(
+                f"Newly trained model loaded from {self.model_trainer_artifact.trained_model_file_path}"
+            )
             return trained_model
         except Exception as e:
             raise EV_Exception(e, sys) from e
-        
+
     def load_mlflow_production_model(self) -> Optional[object]:
-        logging.info("Start Loading of model from MLflow")        
+        logging.info("Start Loading of model from MLflow")
         # Set tracking URI and experiment name
         if not self.model_register_config.ec2_mlflow_tracking_uri:
-            raise ValueError(
-                "EC2_MLFLOW_TRACKING_URI environment variable is not set."
-            )
+            raise ValueError("EC2_MLFLOW_TRACKING_URI environment variable is not set.")
 
         mlflow.set_tracking_uri(self.model_register_config.ec2_mlflow_tracking_uri)
+        mlflow.set_experiment(self.model_register_config.experiment_name)
 
         try:
             # Create an MlflowClient to interact with the MLflow server
@@ -71,8 +74,12 @@ class ModelEvaluation:
 
             if versions:
                 latest_version = versions[0].version
-                run_id = versions[0].run_id  # Fetching the run ID from the latest version
-                logging.info(f"Latest version in Production: {latest_version}, Run ID: {run_id}")
+                run_id = versions[
+                    0
+                ].run_id  # Fetching the run ID from the latest version
+                logging.info(
+                    f"Latest version in Production: {latest_version}, Run ID: {run_id}"
+                )
 
                 # Construct the logged model path
                 logged_model = f"runs:/{run_id}/model"
@@ -88,7 +95,7 @@ class ModelEvaluation:
 
         except Exception as e:
             raise EV_Exception(e, sys) from e
-        
+
     def get_model_evaluation_object_and_report(
         self, model: object, test_df: np.array
     ) -> Tuple[object, float]:
@@ -105,10 +112,12 @@ class ModelEvaluation:
 
         except Exception as e:
             raise EV_Exception(e, sys) from e
-        
+
     def initiate_model_evaluation(self) -> bool:
         try:
-            logging.info("Entered initiate_model_evaluation method of ModelEvaluation class")
+            logging.info(
+                "Entered initiate_model_evaluation method of ModelEvaluation class"
+            )
             test_arr = self.load_testing_data()
             new_trained_model = self.load_new_trained_model()
             mlflow_production_model = self.load_mlflow_production_model()
@@ -117,24 +126,34 @@ class ModelEvaluation:
                 logging.info("No model found in the 'Production' stage on MLFlow")
                 return True  # This means we can register the new model if no production model exists on MLflow
 
-            new_trained_model, new_trained_model_accuracy = self.get_model_evaluation_object_and_report(
-                model=new_trained_model, test_df=test_arr
+            new_trained_model, new_trained_model_accuracy = (
+                self.get_model_evaluation_object_and_report(
+                    model=new_trained_model, test_df=test_arr
+                )
             )
             logging.info(f"New trained model accuracy: {new_trained_model_accuracy}")
 
-            mlflow_production_model, mlflow_production_model_accuracy = self.get_model_evaluation_object_and_report(
-                model=mlflow_production_model, test_df=test_arr
+            mlflow_production_model, mlflow_production_model_accuracy = (
+                self.get_model_evaluation_object_and_report(
+                    model=mlflow_production_model, test_df=test_arr
+                )
             )
-            logging.info(f"MLflow production model accuracy: {mlflow_production_model_accuracy}")
+            logging.info(
+                f"MLflow production model accuracy: {mlflow_production_model_accuracy}"
+            )
 
-            difference = (new_trained_model_accuracy - mlflow_production_model_accuracy)
+            difference = new_trained_model_accuracy - mlflow_production_model_accuracy
 
             if difference > 0.05:
-                logging.info(f"New model is better than the existing model. Differrence in accuracy: {difference}")
-                return True
+                logging.info(
+                    f"New model is better than the existing model. Differrence in accuracy: {difference}"
+                )
+                return True  # This means we can register the new trained model if it is better than the existing one on MLflow
             else:
-                logging.info(f"New model is not better than the existing model. Difference in accuracy: {difference}")
-                return False
+                logging.info(
+                    f"New model is not better than the existing model. Difference in accuracy: {difference}"
+                )
+                return False  # This means we should not register the new trained model as it is not better than the existing one on MLflow
 
         except Exception as e:
             raise EV_Exception(e, sys) from e

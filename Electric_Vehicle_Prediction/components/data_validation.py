@@ -31,7 +31,7 @@ class DataValidation:
             self._schema_config = main_utils.read_yaml_file(file_path=SCHEMA_FILE_PATH)
         except Exception as e:
             raise EV_Exception(e, sys)
-        
+
     @staticmethod
     def read_data(file_path) -> DataFrame:
         try:

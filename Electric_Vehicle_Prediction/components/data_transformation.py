@@ -51,7 +51,7 @@ class DataTransformation:
 
         try:
             numeric_transformer = StandardScaler()
-            oh_transformer = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+            oh_transformer = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
             ordinal_encoder = OrdinalEncoder()
 
             logging.info("Initialized StandardScaler, OneHotEncoder, OrdinalEncoder")
@@ -159,4 +159,3 @@ class DataTransformation:
 
         except Exception as e:
             raise EV_Exception(e, sys) from e
-        

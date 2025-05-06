@@ -37,4 +37,3 @@ class ModelTrainerArtifact:
     trained_model_file_path: str
     metric_artifact_file_path: str
     metric_artifact: RegressionMetricArtifact
-

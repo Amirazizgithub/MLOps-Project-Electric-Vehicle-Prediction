@@ -88,7 +88,7 @@ class ModelRegister:
                 stage="staging",
                 archive_existing_versions=True,
             )
-            
+
             logging.info(
                 f"Model version {model_version.version} transitioned to Production stage"
             )
