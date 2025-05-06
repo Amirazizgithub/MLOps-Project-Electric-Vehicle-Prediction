@@ -95,9 +95,3 @@ class ModelRegisterConfig:
     ec2_mlflow_tracking_uri: str = EC2_MLFLOW_TRACKING_URI
     experiment_name: str = EXPERIMENT_NAME
     mlflow_model_name: str = MLFLOW_MODEL_NAME
-
-
-# Define the model evaluation config
-@dataclass
-class ModelEvaluationConfig:
-    changed_threshold_score: float = MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE

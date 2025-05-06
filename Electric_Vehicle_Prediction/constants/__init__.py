@@ -65,8 +65,3 @@ MODEL REGISTER related constant
 EC2_MLFLOW_TRACKING_URI: str = os.getenv("EC2_MLFLOW_TRACKING_URI")
 EXPERIMENT_NAME: str = "EV_Prediction"
 MLFLOW_MODEL_NAME: str = "EV_Prediction_Model"
-
-"""
-MODEL EVALUATION related constant 
-"""
-MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02

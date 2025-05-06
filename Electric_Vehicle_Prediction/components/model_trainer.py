@@ -26,7 +26,7 @@ class ModelTrainer:
 
     def get_model_object_and_report(
         self, train: np.array, test: np.array
-    ) -> Tuple[object, object]:
+    ) -> Tuple[object, object, float]:
         try:
             logging.info("Using XGBoost to get best model object and report")
 
