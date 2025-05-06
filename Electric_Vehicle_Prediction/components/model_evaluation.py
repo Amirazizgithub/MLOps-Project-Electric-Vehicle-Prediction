@@ -9,7 +9,6 @@ from Electric_Vehicle_Prediction.logger import logging
 from Electric_Vehicle_Prediction.utils.main_utils import main_utils
 import sys
 import numpy as np
-import pandas as pd
 from typing import Tuple
 import mlflow
 import mlflow.sklearn
