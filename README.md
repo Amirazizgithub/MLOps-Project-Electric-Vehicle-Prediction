@@ -1,6 +1,6 @@
 # MLOps-Project-Electric-Vehicle-Prediction
 
-A comprehensive MLOps project designed to predict electric vehicle trends using machine learning techniques. This repository integrates data preprocessing, model training, evaluation, and deployment workflows, showcasing an end-to-end machine learning pipeline with DevOps practices.
+A comprehensive MLOps project designed to predict electric vehicle trends using machine learning techniques. This repository integrates data preprocessing, model training, evaluation, and deployment workflows, showcasing an end-to-end machine learning pipeline with DevOps practices. I register the trained ML models using MLflow and run the MLflow UI on AWS EC2 to track my models. Using a CI/CD pipeline, I deploy the project on AWS EC2.
 
 ---
 
@@ -12,6 +12,7 @@ This project aims to predict electric vehicle trends by leveraging machine learn
 - **Data Transformation**: Preparing data for model training.
 - **Model Training**: Building and training machine learning models.
 - **Model Evaluation**: Assessing model performance.
+- **Model Registering**: Using MLflow to register and track trained models.
 - **Deployment**: Deploying the model for real-time predictions.
 
 ---
